@@ -100,6 +100,8 @@ xxx - list, который мы цедим.
 
 
 
+
+
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 4.1 Запросить у пользователя ввод IP-сети в формате: 10.1.1.0/24
@@ -134,7 +136,7 @@ print("{:15}{:15}{:15}{:15}".format(m1,m2,m3,m4))
 
 4.2
 
-В задании создан словарь, с информацией и разных устройствах.
+В задании создан словарь, с информацией о разных устройствах.
 
 Вам нужно запросить у пользователя ввод имени устройства (r1, r2 или sw1).
 И вывести информацию о соответствующем устройстве на стандартный поток вывода
@@ -152,6 +154,7 @@ london_co = {
     '''...'''
 }
 ------------
+
 #!/usr/bin/env python3.6
 
 
@@ -181,7 +184,10 @@ london_co = {
     }
 }
 dev = input('Enter device name (r1,r2 or sw1): ')
-print(london_co.get(dev))
+param = input("Enter parameter name (ios,model,vendor,location,ip):")
+dev = str.lower(dev)
+param = str.lower(param)
+print(london_co.get(dev).get(param))
 
 
 -------------
@@ -225,3 +231,78 @@ for n in a:
 
 # same solution in one line:
 even = [n for n in a if n % 2 == 0]
+
+
+5.1 
+1. Запросить у пользователя ввод IP-адреса в формате 10.0.1.1.
+2. Определить какому классу принадлежит IP-адрес.
+3. В зависимости от класса адреса, вывести на стандартный поток вывода:
+'unicast' - если IP-адрес принадлежит классу A, B или C
+'multicast' - если IP-адрес принадлежит классу D
+'local broadcast' - если IP-адрес равен 255.255.255.255
+'unassigned' - если IP-адрес равен 0.0.0.0
+'unused' - во всех остальных случаях
+Подсказка по классам (диапазон значений первого байта в десятичном формате):
+A: 1-127
+B: 128-191
+C: 192-223
+D: 224-239
+Если адрес задан неправильно, выводить сообщение:
+'Incorrect IPv4 address'
+и запросить адрес снова.
+
+
+while True:
+    ip = input(print('Enter IP address:\n'))
+    address = ip.split('.')
+    address = [int(i) for i in address]
+    k = 0
+    for i in address:
+        if i < 1 or i > 255:
+            print("It doesn't look like IP address")
+        else:
+            k += 1
+    if k==4:
+        break
+
+if ip == "0.0.0.0":
+    print('unassigned')
+elif address[0] < 224:
+    print ('UNICAST')
+elif address[0] >= 224 and address[0] < 240:
+    print('MULTICAST')
+elif ip == '255.255.255.255':
+    print('local broadcast')
+else:
+    print('unused')
+
+
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-
+'''
+Задание 6.1
+
+Аналогично заданию 3.6 обработать строки из файла ospf.txt
+и вывести информацию по каждой в таком виде:
+Protocol:              OSPF
+Prefix:                10.0.24.0/24
+AD/Metric:             110/41
+Next-Hop:              10.0.13.3
+Last update:           3d18h
+Outbound Interface:    FastEthernet0/0
+
+Ограничение: Все задания надо выполнять используя только пройденные темы.
+
+'''
+with open("d:/ospf.txt") as f:
+    for line in f:
+        list1 = (line.split())
+        print("%-20s %-15s" % ('Protocol:',((list1[0])+'SPF') ))
+        print("%-20s %-15s" % ('Prefix:',(list1[1])))
+        print("%-20s %-15s" % ('AD/Metric:',(list1[2]).strip('[]')))
+        print("%-20s %-15s" % ('Next-Hop:',(list1[4]).strip(',')))
+        print("%-20s %-15s" % ('Last update:',(list1[5]).strip(',')))
+        print("%-20s %-15s" % ('Outbound Interface:',(list1[6])) + '\n')
+
+-=-=-=-=-=-=-=-=-=-=-=-=-
+

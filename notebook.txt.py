@@ -11,6 +11,12 @@
 >>> sudo pip search MODULE_NAME
 >>> sudo pip install MODULE_NAME
 
+# HOW TO FIND PATH FOR MODULE?
+
+>>> import shutil
+>>> shutil.__file__
+'/usr/lib/python2.7/shutil.pyc'
+
 -------------------
 
 Function consist of
@@ -552,9 +558,21 @@ interfaces_info = [[ 'Fa0/1' ,  '10.0.1.1' ,  '/24' ],
 [ 'Lo0' ,  '10.0.0.1' ,  '/32' ]]
 for info in interfaces_info:
     print(config_interface(*info))
+    
 
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+# variable-length argument list
 
+In [1]: def sum_arg(a,*args):
+   ...:     print(a, args)
+   ...:     return a + sum(args)
+   ...:
+
+In [2]: sum_arg(1,10,20,30)
+1 (10, 20, 30)
+Out[2]: 61
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 ''' стандартные функции '''
 
@@ -574,11 +592,6 @@ compile()   globals()   map()           reversed()  __import__()
 complex()   hasattr()   max()           round()
 delattr()   hash()      memoryview()    set()
 
-# HOW TO FIND PATH FOR MODULE?
-
->>> import shutil
->>> shutil.__file__
-'/usr/lib/python2.7/shutil.pyc'
 
 -=-=-=-=-=-=-=-=-=-
 
@@ -620,3 +633,4 @@ sorted(list_of_words, key=len) # отсортирует по ключу len
 
 
 -=-=-=-=-=-=-=-=-=-=-=-=-=-
+

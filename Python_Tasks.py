@@ -306,3 +306,30 @@ with open("d:/ospf.txt") as f:
 
 -=-=-=-=-=-=-=-=-=-=-=-=-
 
+'''Создать функцию, которая генерирует конфигурацию для access-портов.
+Параметр access ожидает, как аргумент, словарь access-портов'''      
+
+      intf_name = {
+    'FastEthernet0/12': 10,
+    'FastEthernet0/14': 11,
+    'FastEthernet0/16': 17
+}
+
+access_mode_template = [
+    'switchport mode access', 'switchport access vlan',
+    'switchport nonegotiate', 'spanning-tree portfast',
+    'spanning-tree bpduguard enable'
+]
+
+def confInt(intf_name, access_mode_template):
+    interface = 'interface {}'
+    vl = ' {}'
+    for key in intf_name:
+        print(interface.format(key))
+        for i in access_mode_template:
+            if access_mode_template.index(i) == 1:
+                print(i + (vl.format(intf_name[key])))
+            else:
+                print(i)
+    return
+confInt(intf_name,access_mode_template)
